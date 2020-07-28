@@ -33,7 +33,7 @@ class CategoriesScroller extends StatelessWidget {
             children: <Widget>[
               ...categories.map((category) {
                 return GestureDetector(
-                  onTap: () => changeProducts(category.id, products),
+                  onTap: () => changeProducts(category.id),
                   child: Container(
                     width: 150,
                     margin: EdgeInsets.only(right: 20),

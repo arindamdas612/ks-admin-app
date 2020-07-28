@@ -348,39 +348,71 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           height: 15,
                         ),
                         Consumer<Products>(
-                          builder: (ctx, prodData, _) => Container(
-                            child: Column(children: <Widget>[
-                              ...prodData
-                                  .findById(_product.id)
-                                  .productSpecs
-                                  .map(
-                                    (prod) => Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: <Widget>[
-                                        Text(
-                                          prod['key'],
-                                          style: TextStyle(
-                                              color: Colors.blue, fontSize: 20),
-                                        ),
-                                        Icon(
-                                          Icons.keyboard_arrow_right,
-                                          color: Theme.of(context)
-                                              .primaryColorLight,
-                                        ),
-                                        Text(
-                                          prod['value'],
-                                          style: TextStyle(
-                                              color: Colors.blueAccent,
-                                              fontSize: 20),
-                                        ),
-                                      ],
+                            builder: (ctx, prodData, _) => DataTable(
+                                  dividerThickness: 2,
+                                  columns: const <DataColumn>[
+                                    DataColumn(
+                                      label: Text(
+                                        'Key',
+                                        style: TextStyle(
+                                            fontStyle: FontStyle.italic),
+                                      ),
                                     ),
-                                  )
-                                  .toList()
-                            ]),
-                          ),
-                        ),
+                                    DataColumn(
+                                      label: Text(
+                                        'Value',
+                                        style: TextStyle(
+                                            fontStyle: FontStyle.italic),
+                                      ),
+                                    ),
+                                  ],
+                                  rows: <DataRow>[
+                                    ...prodData
+                                        .findById(_product.id)
+                                        .productSpecs
+                                        .map(
+                                          (specs) => DataRow(
+                                            cells: <DataCell>[
+                                              DataCell(Text(specs['key'])),
+                                              DataCell(Text(specs['value'])),
+                                            ],
+                                          ),
+                                        ),
+                                  ],
+                                )
+                            // Container(
+                            //   child: Column(children: <Widget>[
+                            //     ...prodData
+                            //         .findById(_product.id)
+                            //         .productSpecs
+                            //         .map(
+                            //           (prod) => Row(
+                            //             mainAxisAlignment:
+                            //                 MainAxisAlignment.spaceEvenly,
+                            //             children: <Widget>[
+                            //               Text(
+                            //                 prod['key'],
+                            //                 style: TextStyle(
+                            //                     color: Colors.blue, fontSize: 20),
+                            //               ),
+                            //               Icon(
+                            //                 Icons.keyboard_arrow_right,
+                            //                 color: Theme.of(context)
+                            //                     .primaryColorLight,
+                            //               ),
+                            //               Text(
+                            //                 prod['value'],
+                            //                 style: TextStyle(
+                            //                     color: Colors.blueAccent,
+                            //                     fontSize: 20),
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         )
+                            //         .toList()
+                            //   ]),
+                            // ),
+                            ),
                         const SizedBox(
                           height: 15,
                         ),

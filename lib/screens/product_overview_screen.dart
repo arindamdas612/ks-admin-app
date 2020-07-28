@@ -116,11 +116,10 @@ class _ProductOverViewScreenState extends State<ProductOverViewScreen> {
                       var categoryToFetch = _selctedCategory == -1
                           ? _categories[0].id
                           : _selctedCategory;
-                      var prodWidget = getProductWidgets(
-                        prods
-                            .where((pd) => pd.categoryId == categoryToFetch)
-                            .toList(),
-                      );
+                      var selectedProducts = prods
+                          .where((pd) => pd.categoryId == categoryToFetch)
+                          .toList();
+                      var prodWidget = getProductWidgets(selectedProducts);
                       return Container(
                         height: size.height,
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -161,7 +160,7 @@ class _ProductOverViewScreenState extends State<ProductOverViewScreen> {
                                           scale,
                                           index,
                                           prodWidget[index],
-                                          productData.items[index].id,
+                                          selectedProducts[index].id,
                                         );
                                       },
                                     ),

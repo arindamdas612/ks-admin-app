@@ -226,11 +226,28 @@ class Products with ChangeNotifier {
     }
   }
 
-  // Future<void> deleteProduct(int id) {
-  //   var productIndex = _items.indexWhere((prod) => prod.id == id);
-  //   _items.removeAt(productIndex);
-  //   notifyListeners();
-  // }
+  Future<void> deleteProduct(int id) async {
+    var productIndex = _items.indexWhere((prod) => prod.id == id);
+    Map<String, String> requestHeader = {
+      "Content-type": "application/json",
+      "Accept": "application/json",
+      "Authorization": "token $_authToken",
+    };
+    var url = 'http://10.0.2.2:8000/api/2/product/update/?id=$id';
+    try {
+      final response = await http.delete(url, headers: requestHeader);
+      var extractedData = json.decode(response.body);
+      final respCode = extractedData['message_code'];
+      if (respCode == 0) {
+        throw HttpException(extractedData['details']);
+      } else {
+        _items.removeAt(productIndex);
+        notifyListeners();
+      }
+    } catch (error) {
+      throw HttpException('Error Occured');
+    }
+  }
 
   Future<void> updateTitle(int id, String newTitle) async {
     var productIndex = _items.indexWhere((prod) => prod.id == id);
