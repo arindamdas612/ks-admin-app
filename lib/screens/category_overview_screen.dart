@@ -16,7 +16,7 @@ class CategoryOverviewScreen extends StatefulWidget {
 }
 
 class _CategoryOverviewScreenState extends State<CategoryOverviewScreen> {
-  Future<void> _refreshProducts(BuildContext context) async {
+  Future<void> _refreshCategories(BuildContext context) async {
     await Provider.of<Categories>(context, listen: false)
         .setAndFetchCategories();
   }
@@ -36,14 +36,14 @@ class _CategoryOverviewScreenState extends State<CategoryOverviewScreen> {
       ),
       drawer: AppDrawer(),
       body: FutureBuilder(
-        future: _refreshProducts(context),
+        future: _refreshCategories(context),
         builder: (ctx, snapshot) =>
             snapshot.connectionState == ConnectionState.waiting
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
                 : RefreshIndicator(
-                    onRefresh: () => _refreshProducts(context),
+                    onRefresh: () => _refreshCategories(context),
                     child: Consumer<Categories>(
                       builder: (ctx, categoryData, _) => Padding(
                         padding: const EdgeInsets.symmetric(

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/categoy.dart';
@@ -8,10 +8,12 @@ import '../models/http_exception.dart';
 
 class Categories with ChangeNotifier {
   String _authToken;
-  int _userId;
   List<Category> _items;
 
-  Categories(this._authToken, this._userId, this._items);
+  Categories(
+    this._authToken,
+    this._items,
+  );
 
   List<Category> get items {
     return _items;

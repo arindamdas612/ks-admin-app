@@ -5,10 +5,16 @@ import './screens/auth_screen.dart';
 import './screens/home_screen.dart';
 import './screens/category_overview_screen.dart';
 import './screens/product_overview_screen.dart';
-import 'screens/category_add_screen.dart';
+import './screens/category_add_screen.dart';
+import './screens/product_add_screen.dart';
+import 'screens/product_add_spec_screen.dart';
+import './screens/product_add_images_screen.dart';
+import './screens/product_detail_screen.dart';
+import './screens/product_carousel.dart';
 
 import './providers/auth.dart';
 import './providers/categories.dart';
+import './providers/products.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,10 +28,18 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => Auth()),
         ChangeNotifierProxyProvider<Auth, Categories>(
+          create: null,
           update: (ctx, auth, previousCategories) => Categories(
-              auth.token,
-              auth.userId,
-              previousCategories == null ? [] : previousCategories.items),
+            auth.token,
+            previousCategories == null ? [] : previousCategories.items,
+          ),
+        ),
+        ChangeNotifierProxyProvider<Auth, Products>(
+          create: null,
+          update: (ctx, auth, previousProducts) => Products(
+            auth.token,
+            previousProducts == null ? [] : previousProducts.items,
+          ),
         ),
       ],
       child: Consumer<Auth>(
@@ -35,6 +49,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.purple,
             accentColor: Colors.green,
           ),
+          //home: MyHomePage(),
           home: authData.isAUth
               ? HomeScreen()
               : FutureBuilder(
@@ -51,6 +66,11 @@ class MyApp extends StatelessWidget {
             CategoryOverviewScreen.routeName: (_) => CategoryOverviewScreen(),
             CategoryAddScreen.routeName: (_) => CategoryAddScreen(),
             ProductOverViewScreen.routeName: (_) => ProductOverViewScreen(),
+            ProductAddScreen.routeName: (_) => ProductAddScreen(),
+            ProductSpecAddScreen.routeName: (_) => ProductSpecAddScreen(),
+            ProductImageAddScreen.routeName: (_) => ProductImageAddScreen(),
+            ProductDetailScreen.routeName: (_) => ProductDetailScreen(),
+            ProductCarousel.routName: (_) => ProductCarousel(),
           },
           debugShowCheckedModeBanner: false,
         ),
