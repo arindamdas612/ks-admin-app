@@ -107,12 +107,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             : CustomScrollView(
                 slivers: <Widget>[
                   SliverAppBar(
-                    expandedHeight: 500,
-                    pinned: true,
+                    iconTheme:
+                        IconThemeData(color: Theme.of(context).accentColor),
+                    expandedHeight: 550,
+                    pinned: false,
                     actions: <Widget>[
                       Consumer<Products>(
                         builder: (ctx, prodData, _) => IconButton(
-                          icon: Icon(Icons.view_carousel),
+                          icon: Icon(
+                            Icons.view_carousel,
+                          ),
                           onPressed: () => Navigator.of(context).pushNamed(
                             ProductCarousel.routName,
                             arguments: [
@@ -125,7 +129,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     flexibleSpace: FlexibleSpaceBar(
                       title: Text(
                         _product.title,
-                        style: TextStyle(color: Colors.black54),
+                        style: TextStyle(color: Colors.black87),
                       ),
                       background: Hero(
                         tag: _product.id,
@@ -223,7 +227,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 builder: (ctx, productData, _) => Text(
                                   '₹ ${productData.findById(_product.id).markedPrice.toStringAsFixed(2)}',
                                   style: TextStyle(
-                                    color: Colors.black,
                                     fontSize: 20,
                                   ),
                                   textAlign: TextAlign.center,
@@ -234,7 +237,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               builder: (cts, productsData, _) => Text(
                                 'Quantity: ${productsData.findById(_product.id).qty}',
                                 style: TextStyle(
-                                  color: Colors.black,
                                   fontSize: 20,
                                 ),
                                 textAlign: TextAlign.center,
@@ -260,7 +262,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     }),
                                 icon: Icon(Icons.update),
                                 label: Text('Specs'),
-                                color: Colors.lightBlue,
+                                color: Theme.of(context).primaryColorDark,
                               ),
                             ),
                             FlatButton.icon(
@@ -270,7 +272,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               ),
                               icon: Icon(Icons.cloud_upload),
                               label: Text('Replace'),
-                              color: Colors.amberAccent,
+                              color: Theme.of(context).primaryColorLight,
                             ),
                           ],
                         ),
@@ -289,18 +291,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                         Consumer<Products>(
                           builder: (ctx, prodData, _) => FlatButton.icon(
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).primaryColorDark,
                             label: Text(
                               _qtyAddValue < 0
                                   ? 'Remove ${(_qtyAddValue * -1).toStringAsFixed(0)} items'
                                   : 'Add ${_qtyAddValue.toStringAsFixed(0)} items',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
                             ),
                             icon: Icon(
                               Icons.system_update_alt,
-                              color: Colors.white,
                             ),
                             onPressed: _qtyAddValue != 0
                                 ? () {
@@ -347,72 +345,71 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         const SizedBox(
                           height: 15,
                         ),
+                        Container(
+                          height: 70,
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(10),
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
+                            color: null,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.teal.withAlpha(200),
+                                blurRadius: 10.0,
+                              ),
+                            ],
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Product Specifcations',
+                            style: TextStyle(
+                                color: const Color(0xFF333131),
+                                fontStyle: FontStyle.italic,
+                                fontSize: 24),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
                         Consumer<Products>(
-                            builder: (ctx, prodData, _) => DataTable(
-                                  dividerThickness: 2,
-                                  columns: const <DataColumn>[
-                                    DataColumn(
-                                      label: Text(
-                                        'Key',
-                                        style: TextStyle(
-                                            fontStyle: FontStyle.italic),
-                                      ),
+                          builder: (ctx, prodData, _) => DataTable(
+                            dividerThickness: 2,
+                            columns: const <DataColumn>[
+                              DataColumn(
+                                label: Text(
+                                  'Key',
+                                  style: TextStyle(
+                                    color: const Color(0xFF64ffda),
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Value',
+                                  style: TextStyle(
+                                    color: const Color(0xFF64ffda),
+                                  ),
+                                ),
+                              ),
+                            ],
+                            rows: <DataRow>[
+                              ...prodData
+                                  .findById(_product.id)
+                                  .productSpecs
+                                  .map(
+                                    (specs) => DataRow(
+                                      cells: <DataCell>[
+                                        DataCell(Text(specs['key'])),
+                                        DataCell(Text(specs['value'])),
+                                      ],
                                     ),
-                                    DataColumn(
-                                      label: Text(
-                                        'Value',
-                                        style: TextStyle(
-                                            fontStyle: FontStyle.italic),
-                                      ),
-                                    ),
-                                  ],
-                                  rows: <DataRow>[
-                                    ...prodData
-                                        .findById(_product.id)
-                                        .productSpecs
-                                        .map(
-                                          (specs) => DataRow(
-                                            cells: <DataCell>[
-                                              DataCell(Text(specs['key'])),
-                                              DataCell(Text(specs['value'])),
-                                            ],
-                                          ),
-                                        ),
-                                  ],
-                                )
-                            // Container(
-                            //   child: Column(children: <Widget>[
-                            //     ...prodData
-                            //         .findById(_product.id)
-                            //         .productSpecs
-                            //         .map(
-                            //           (prod) => Row(
-                            //             mainAxisAlignment:
-                            //                 MainAxisAlignment.spaceEvenly,
-                            //             children: <Widget>[
-                            //               Text(
-                            //                 prod['key'],
-                            //                 style: TextStyle(
-                            //                     color: Colors.blue, fontSize: 20),
-                            //               ),
-                            //               Icon(
-                            //                 Icons.keyboard_arrow_right,
-                            //                 color: Theme.of(context)
-                            //                     .primaryColorLight,
-                            //               ),
-                            //               Text(
-                            //                 prod['value'],
-                            //                 style: TextStyle(
-                            //                     color: Colors.blueAccent,
-                            //                     fontSize: 20),
-                            //               ),
-                            //             ],
-                            //           ),
-                            //         )
-                            //         .toList()
-                            //   ]),
-                            // ),
-                            ),
+                                  ),
+                            ],
+                          ),
+                        ),
                         const SizedBox(
                           height: 15,
                         ),

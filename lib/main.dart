@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import './app_theme.dart';
+
 import './screens/auth_screen.dart';
+
 import './screens/home_screen.dart';
+
 import './screens/category_overview_screen.dart';
-import './screens/product_overview_screen.dart';
 import './screens/category_add_screen.dart';
+
+import './screens/product_overview_screen.dart';
 import './screens/product_add_screen.dart';
-import 'screens/product_add_spec_screen.dart';
+import './screens/product_add_spec_screen.dart';
 import './screens/product_add_images_screen.dart';
 import './screens/product_detail_screen.dart';
 import './screens/product_carousel.dart';
 
+import './screens/order_overview_screen.dart';
+
 import './providers/auth.dart';
 import './providers/categories.dart';
 import './providers/products.dart';
+import './providers/orders.dart';
 
 void main() {
   runApp(MyApp());
@@ -41,15 +49,18 @@ class MyApp extends StatelessWidget {
             previousProducts == null ? [] : previousProducts.items,
           ),
         ),
+        ChangeNotifierProxyProvider<Auth, Orders>(
+          create: null,
+          update: (ctx, auth, previousOrders) => Orders(
+            auth.token,
+            previousOrders == null ? [] : previousOrders.items,
+          ),
+        ),
       ],
       child: Consumer<Auth>(
         builder: (ctx, authData, _) => MaterialApp(
           title: 'Flutter Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.purple,
-            accentColor: Colors.green,
-          ),
-          //home: MyHomePage(),
+          theme: AppTheme.darkTheme,
           home: authData.isAUth
               ? HomeScreen()
               : FutureBuilder(
@@ -71,6 +82,7 @@ class MyApp extends StatelessWidget {
             ProductImageAddScreen.routeName: (_) => ProductImageAddScreen(),
             ProductDetailScreen.routeName: (_) => ProductDetailScreen(),
             ProductCarousel.routName: (_) => ProductCarousel(),
+            OrdersOverViewScreen.routeName: (_) => OrdersOverViewScreen(),
           },
           debugShowCheckedModeBanner: false,
         ),

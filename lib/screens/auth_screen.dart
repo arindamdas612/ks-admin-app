@@ -17,7 +17,10 @@ class AuthScreen extends StatelessWidget {
           gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
-              colors: [Colors.purple, Colors.green]),
+              colors: [
+                Theme.of(context).accentColor,
+                Theme.of(context).primaryColor,
+              ]),
         ),
         child: ListView(
           children: <Widget>[
@@ -122,7 +125,7 @@ class _AuthCardState extends State<AuthCard> {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.purple[300],
+                color: Colors.black,
                 blurRadius: 10.0, // has the effect of softening the shadow
                 spreadRadius: 1.0, // has the effect of extending the shadow
                 offset: Offset(
@@ -142,14 +145,14 @@ class _AuthCardState extends State<AuthCard> {
                 Text(
                   'Login',
                   style: TextStyle(
-                    color: Colors.purple,
+                    color: Colors.tealAccent,
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 Icon(
                   Icons.arrow_forward,
-                  color: Colors.purple,
+                  color: Colors.tealAccent,
                 ),
               ],
             ),

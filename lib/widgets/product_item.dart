@@ -29,9 +29,12 @@ class ProductItem extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
-          color: Colors.red,
+          color: null,
           boxShadow: [
-            BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
+            BoxShadow(
+              color: Colors.redAccent.withAlpha(100),
+              blurRadius: 10.0,
+            ),
           ],
         ),
         child: Icon(

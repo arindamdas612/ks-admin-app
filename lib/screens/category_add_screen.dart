@@ -125,6 +125,7 @@ class _CategoryAddScreenState extends State<CategoryAddScreen> {
                         initialValue: _initValues['name'],
                         decoration: InputDecoration(
                           labelText: 'Category Name',
+                          icon: const Icon(Icons.title),
                         ),
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) =>
@@ -145,6 +146,8 @@ class _CategoryAddScreenState extends State<CategoryAddScreen> {
                         initialValue: _initValues['description'],
                         decoration: InputDecoration(
                           labelText: 'Description',
+                          icon: const Icon(Icons.description),
+                          hintText: 'some description fot the product',
                         ),
                         maxLines: 3,
                         keyboardType: TextInputType.multiline,

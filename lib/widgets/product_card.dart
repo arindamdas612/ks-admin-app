@@ -61,9 +61,12 @@ class ProductCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
-          color: _product.isActive ? Colors.white : Colors.white70,
+          color: _product.isActive ? Theme.of(context).primaryColor : null,
           boxShadow: [
-            BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
+            BoxShadow(
+              color: Colors.teal.withAlpha(100),
+              blurRadius: 10.0,
+            ),
           ],
         ),
         child: ListTile(
@@ -84,7 +87,7 @@ class ProductCard extends StatelessWidget {
           ),
           title: Text(
             _product.title,
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 15),
           ),
           subtitle: Text(
             '${_product.qty} Left',
@@ -95,6 +98,7 @@ class ProductCard extends StatelessWidget {
           ),
           trailing: Text(
             '₹ ${_product.markedPrice.toStringAsFixed(2)}',
+            style: TextStyle(fontSize: 15),
           ),
         ),
       ),

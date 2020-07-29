@@ -22,25 +22,41 @@ class CategoryItem extends StatelessWidget {
     return Dismissible(
       key: ValueKey(id),
       background: Container(
-        color: Theme.of(context).errorColor,
+        decoration: BoxDecoration(
+          color: null,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.redAccent.withAlpha(100),
+              blurRadius: 10.0,
+            ),
+          ],
+        ),
         child: Icon(
           Icons.delete_forever,
-          color: Colors.white,
+          color: Theme.of(context).primaryColor,
           size: 40,
         ),
         alignment: Alignment.centerLeft,
-        padding: const EdgeInsets.only(right: 20),
+        padding: const EdgeInsets.only(left: 20),
         margin: const EdgeInsets.symmetric(
           horizontal: 15,
           vertical: 4,
         ),
       ),
       secondaryBackground: Container(
-        color: Theme.of(context).primaryColor,
+        decoration: BoxDecoration(
+          color: null,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.tealAccent.withAlpha(100),
+              blurRadius: 10.0,
+            ),
+          ],
+        ),
         child: Icon(
-          Icons.edit_attributes,
-          color: Colors.white,
+          Icons.mode_edit,
           size: 40,
+          color: Theme.of(context).primaryColor,
         ),
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 20),
@@ -115,8 +131,9 @@ class CategoryItem extends StatelessWidget {
         child: ListTile(
           title: Text(name),
           leading: CircleAvatar(
-            child: Text(
-              id.toString(),
+            child: Icon(
+              Icons.bubble_chart,
+              color: Theme.of(context).primaryColor,
             ),
           ),
           subtitle: Text(description),

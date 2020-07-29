@@ -6,6 +6,7 @@ import '../providers/auth.dart';
 import '../screens/home_screen.dart';
 import '../screens/category_overview_screen.dart';
 import '../screens/product_overview_screen.dart';
+import '../screens/order_overview_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -26,6 +27,13 @@ class AppDrawer extends StatelessWidget {
           title: const Text('Home'),
           onTap: () =>
               Navigator.of(context).pushReplacementNamed(HomeScreen.routeName),
+        ),
+        const Divider(),
+        ListTile(
+          leading: const Icon(Icons.flash_auto),
+          title: const Text('Orders'),
+          onTap: () => Navigator.of(context)
+              .pushReplacementNamed(OrdersOverViewScreen.routeName),
         ),
         const Divider(),
         ListTile(

@@ -11,7 +11,6 @@ class ProductImageAddScreen extends StatefulWidget {
 
 class _ProductImageAddScreenState extends State<ProductImageAddScreen> {
   List<Asset> images = List<Asset>();
-  String _error;
   Function _replaceImages;
 
   var _isInit = true;
@@ -28,6 +27,8 @@ class _ProductImageAddScreenState extends State<ProductImageAddScreen> {
     if (images != null)
       return GridView.count(
         crossAxisCount: 3,
+        mainAxisSpacing: 6,
+        crossAxisSpacing: 6,
         children: List.generate(images.length, (index) {
           Asset asset = images[index];
           return AssetThumb(
@@ -54,12 +55,11 @@ class _ProductImageAddScreenState extends State<ProductImageAddScreen> {
         maxImages: 20,
         enableCamera: true,
         materialOptions: MaterialOptions(
-          actionBarTitle: "Action bar",
           allViewTitle: "Select Images",
-          actionBarColor: "#a333a3",
+          actionBarColor: "#333131",
           actionBarTitleColor: "#FFFFFF",
           lightStatusBar: false,
-          statusBarColor: '#a333a3',
+          statusBarColor: '#333131',
           startInAllView: true,
           selectCircleStrokeColor: "#000000",
           selectionLimitReachedText: "You can't select any more.",
@@ -76,7 +76,6 @@ class _ProductImageAddScreenState extends State<ProductImageAddScreen> {
 
     setState(() {
       images = resultList;
-      if (error == null) _error = 'No Error Dectected';
     });
   }
 
@@ -84,10 +83,17 @@ class _ProductImageAddScreenState extends State<ProductImageAddScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        title: const Text('Product Listing Images'),
+        title: const Text('Add Images'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add_a_photo),
+            onPressed: loadAssets,
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.save,
+              color: Theme.of(context).accentColor,
+            ),
             onPressed: () {
               _replaceImages(images);
               Navigator.of(context).pop();
@@ -97,10 +103,6 @@ class _ProductImageAddScreenState extends State<ProductImageAddScreen> {
       ),
       body: Column(
         children: <Widget>[
-          RaisedButton(
-            child: Text("Pick images"),
-            onPressed: loadAssets,
-          ),
           Expanded(
             child: buildGridView(),
           )

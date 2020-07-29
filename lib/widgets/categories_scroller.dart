@@ -41,9 +41,13 @@ class CategoriesScroller extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Theme.of(context).primaryColor,
                       gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomCenter,
-                          colors: [Colors.blue, Colors.green]),
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Theme.of(context).accentColor,
+                          Theme.of(context).primaryColor,
+                        ],
+                      ),
                       borderRadius: BorderRadius.all(
                         Radius.circular(20.0),
                       ),

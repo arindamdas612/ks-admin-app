@@ -120,7 +120,7 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
         .items
         .map((cat) => {'id': cat.id, 'name': cat.name})
         .toList();
-    categoryList.insert(0, {'name': 'Select One', 'id': 0});
+    categoryList.insert(0, {'name': 'Select Category', 'id': 0});
 
     return Scaffold(
       appBar: AppBar(
@@ -148,6 +148,7 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                             controller: _titleController,
                             decoration: InputDecoration(
                               labelText: 'Product Title',
+                              icon: const Icon(Icons.title),
                             ),
                             onSubmitted: (value) {},
                           ),
@@ -159,15 +160,6 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
-                                Text(
-                                  'Category',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
                                 DropdownButton<int>(
                                   icon: Icon(Icons.arrow_drop_down),
                                   onChanged: (value) => this.setState(() {
@@ -221,14 +213,16 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                                 width: 10,
                               ),
                               Container(
-                                decoration:
-                                    BoxDecoration(color: Colors.deepPurple),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).primaryColor,
+                                ),
                                 width: 100,
                                 alignment: Alignment.center,
                                 child: Text(
                                   _productQuantity.toString(),
                                   style: TextStyle(
-                                    fontSize: 15,
+                                    fontSize: 20,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -252,6 +246,16 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                             controller: _priceController,
                             decoration: InputDecoration(
                               labelText: 'Marked Price',
+                              icon: Container(
+                                child: Image(
+                                  image: AssetImage(
+                                    'assets/images/rupee-symbol-file.png',
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                                height: 30,
+                                width: 30,
+                              ),
                             ),
                             keyboardType: TextInputType.number,
                             onSubmitted: (value) {},
