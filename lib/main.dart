@@ -18,6 +18,7 @@ import './screens/product_detail_screen.dart';
 import './screens/product_carousel.dart';
 
 import './screens/order_overview_screen.dart';
+import './screens/order_detail_screen.dart';
 
 import './providers/auth.dart';
 import './providers/categories.dart';
@@ -83,6 +84,7 @@ class MyApp extends StatelessWidget {
             ProductDetailScreen.routeName: (_) => ProductDetailScreen(),
             ProductCarousel.routName: (_) => ProductCarousel(),
             OrdersOverViewScreen.routeName: (_) => OrdersOverViewScreen(),
+            OrderDetailScreen.routeName: (_) => OrderDetailScreen(),
           },
           debugShowCheckedModeBanner: false,
         ),

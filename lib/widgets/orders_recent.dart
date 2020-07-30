@@ -1,12 +1,14 @@
 import "package:collection/collection.dart";
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/order_status_icon.dart';
 import '../widgets/order_chart.dart';
+import '../widgets/status_count_icon.dart';
 
 import '../providers/orders.dart';
+
+import '../screens/order_detail_screen.dart';
 
 class OrdersRecent extends StatefulWidget {
   @override
@@ -29,7 +31,7 @@ class _OrdersRecentState extends State<OrdersRecent> {
           'orderStatus': order.orderStatus,
           'createDt': order.createDt,
           'updateDt': order.updateDt,
-          'orderDt': DateFormat.yMd().format(order.createDt),
+          'orderDt': order.orderDt,
         });
     var groupedOrders = groupBy(orderMap, (obj) => obj['orderDt']);
 
@@ -37,25 +39,46 @@ class _OrdersRecentState extends State<OrdersRecent> {
 
     groupedOrders.forEach((key, value) {
       final dayOrders = groupedOrders[key];
-      orderWidget.add(ExpansionTile(
-        leading: const Icon(Icons.calendar_today),
-        title: Text(key),
-        children: <Widget>[
-          ...dayOrders
-              .map((e) => Column(
-                    children: <Widget>[
-                      Card(
-                        elevation: 10,
-                        child: ListTile(
-                          leading: OrderStatusIcon(e['orderStatus']),
-                          title: Text(e['displayId']),
+      orderWidget.add(Card(
+        elevation: 6,
+        color: Colors.black12,
+        child: ExpansionTile(
+          leading: StatusCountIcon(
+            Provider.of<Orders>(context, listen: false).dayCount(key),
+          ),
+          title: Text(key),
+          subtitle: Text(
+              '₹ ${Provider.of<Orders>(context, listen: false).dayAmount(key)}'),
+          children: <Widget>[
+            ...dayOrders
+                .map((e) => Column(
+                      children: <Widget>[
+                        InkWell(
+                          splashColor: Theme.of(context).accentColor,
+                          onTap: () => Navigator.of(context).pushNamed(
+                            OrderDetailScreen.routeName,
+                            arguments: e['id'],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(2),
+                            child: Card(
+                              elevation: 10,
+                              child: ListTile(
+                                leading: OrderStatusIcon(e['orderStatus']),
+                                title: Text(e['displayId']),
+                                subtitle: Text(e['userMail']),
+                                trailing:
+                                    Text('₹ ${e['orderValue'].toString()}'),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                      const Divider(),
-                    ],
-                  ))
-              .toList()
-        ],
+                        const Divider(),
+                      ],
+                    ))
+                .toList()
+          ],
+        ),
       ));
     });
 

@@ -54,7 +54,7 @@ class _OrderChartState extends State<OrderChart> {
             orderCountWidget(
               OrderChart.orderStatusList[0],
               context,
-              orderData.statusTotal(OrderChart.orderStatusList[0]),
+              orderData.statusCount(OrderChart.orderStatusList[0]),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -62,17 +62,17 @@ class _OrderChartState extends State<OrderChart> {
                 orderCountWidget(
                   OrderChart.orderStatusList[6],
                   context,
-                  orderData.statusTotal(OrderChart.orderStatusList[6]),
+                  orderData.statusCount(OrderChart.orderStatusList[6]),
                 ),
                 orderCountWidget(
                   OrderChart.orderStatusList[5],
                   context,
-                  orderData.statusTotal(OrderChart.orderStatusList[5]),
+                  orderData.statusCount(OrderChart.orderStatusList[5]),
                 ),
                 orderCountWidget(
                   OrderChart.orderStatusList[1],
                   context,
-                  orderData.statusTotal(OrderChart.orderStatusList[1]),
+                  orderData.statusCount(OrderChart.orderStatusList[1]),
                 ),
               ],
             ),
@@ -82,24 +82,24 @@ class _OrderChartState extends State<OrderChart> {
                 orderCountWidget(
                   OrderChart.orderStatusList[7],
                   context,
-                  orderData.statusTotal(OrderChart.orderStatusList[7]),
+                  orderData.statusCount(OrderChart.orderStatusList[7]),
                 ),
                 orderCountWidget(
                   OrderChart.orderStatusList[2],
                   context,
-                  orderData.statusTotal(OrderChart.orderStatusList[2]),
+                  orderData.statusCount(OrderChart.orderStatusList[2]),
                 ),
               ],
             ),
             orderCountWidget(
               OrderChart.orderStatusList[3],
               context,
-              orderData.statusTotal(OrderChart.orderStatusList[3]),
+              orderData.statusCount(OrderChart.orderStatusList[3]),
             ),
             orderCountWidget(
               OrderChart.orderStatusList[4],
               context,
-              orderData.statusTotal(OrderChart.orderStatusList[4]),
+              orderData.statusCount(OrderChart.orderStatusList[4]),
             ),
           ],
         ),

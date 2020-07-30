@@ -19,12 +19,24 @@ class Orders with ChangeNotifier {
     return [..._items];
   }
 
-  int statusTotal(String orderStautus) {
-    return _items.fold(
-        0,
-        (count, order) =>
-            order.orderStatus == orderStautus ? count + 1 : count);
-  }
+  Order findById(int orderId) =>
+      _items.firstWhere((order) => order.id == orderId);
+
+  int statusCount(String orderStautus) => _items.fold(
+      0,
+      (totalCount, order) =>
+          order.orderStatus == orderStautus ? totalCount + 1 : totalCount);
+
+  int dayCount(String orderDate) => _items.fold(
+      0,
+      (totalCount, order) =>
+          order.orderDt == orderDate ? totalCount + 1 : totalCount);
+
+  double dayAmount(String orderDate) => _items.fold(
+      0.0,
+      (totalCount, order) => order.orderDt == orderDate
+          ? totalCount + order.orderValue
+          : totalCount);
 
   Future<void> setAndFetchOrders() async {
     Map<String, String> requestHeader = {
