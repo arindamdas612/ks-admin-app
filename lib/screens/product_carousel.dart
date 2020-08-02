@@ -36,8 +36,8 @@ class _ProductCarouselState extends State<ProductCarousel> {
                         Image.network(
                           item,
                           fit: BoxFit.cover,
-                          width: 1000.0,
-                          height: 1000,
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height * 0.8,
                         ),
                         Positioned(
                           bottom: 0.0,

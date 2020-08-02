@@ -13,8 +13,9 @@ class OrderChart extends StatefulWidget {
     'In Transit',
     'Delivered',
     'Returned',
-    'Partially Returned',
+    'No Stock (P)',
     'Dismissed',
+    'No Stock',
   ];
 
   @override
@@ -51,10 +52,20 @@ class _OrderChartState extends State<OrderChart> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            orderCountWidget(
-              OrderChart.orderStatusList[0],
-              context,
-              orderData.statusCount(OrderChart.orderStatusList[0]),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                orderCountWidget(
+                  OrderChart.orderStatusList[0],
+                  context,
+                  orderData.statusCount(OrderChart.orderStatusList[0]),
+                ),
+                orderCountWidget(
+                  OrderChart.orderStatusList[1],
+                  context,
+                  orderData.statusCount(OrderChart.orderStatusList[1]),
+                ),
+              ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -65,14 +76,14 @@ class _OrderChartState extends State<OrderChart> {
                   orderData.statusCount(OrderChart.orderStatusList[6]),
                 ),
                 orderCountWidget(
+                  OrderChart.orderStatusList[8],
+                  context,
+                  orderData.statusCount(OrderChart.orderStatusList[8]),
+                ),
+                orderCountWidget(
                   OrderChart.orderStatusList[5],
                   context,
                   orderData.statusCount(OrderChart.orderStatusList[5]),
-                ),
-                orderCountWidget(
-                  OrderChart.orderStatusList[1],
-                  context,
-                  orderData.statusCount(OrderChart.orderStatusList[1]),
                 ),
               ],
             ),

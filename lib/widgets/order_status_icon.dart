@@ -63,13 +63,22 @@ class OrderStatusIcon extends StatelessWidget {
           backgroundColor: Colors.blueGrey,
         );
         break;
-      case 'Partially Returned':
+      case 'No Stock (P)':
         icon = CircleAvatar(
           child: Icon(
             Icons.reply,
             color: Color(0xFF333131),
           ),
           backgroundColor: Colors.lightBlueAccent,
+        );
+        break;
+      case 'No Stock':
+        icon = CircleAvatar(
+          child: Icon(
+            Icons.remove_circle,
+            color: Color(0xFF333131),
+          ),
+          backgroundColor: Colors.brown,
         );
         break;
       case 'Dismissed':

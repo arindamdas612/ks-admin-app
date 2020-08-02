@@ -18,7 +18,7 @@ class OrdersRecent extends StatefulWidget {
 class _OrdersRecentState extends State<OrdersRecent> {
   @override
   Widget build(BuildContext context) {
-    var orderData = Provider.of<Orders>(context, listen: false).items;
+    final orderData = Provider.of<Orders>(context).items;
 
     var orderMap = orderData.map((order) => {
           'id': order.id,

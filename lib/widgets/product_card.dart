@@ -64,7 +64,9 @@ class ProductCard extends StatelessWidget {
           color: _product.isActive ? Theme.of(context).primaryColor : null,
           boxShadow: [
             BoxShadow(
-              color: Colors.teal.withAlpha(100),
+              color: _product.isActive
+                  ? Theme.of(context).accentColor.withAlpha(100)
+                  : Colors.redAccent.withAlpha(100),
               blurRadius: 10.0,
             ),
           ],

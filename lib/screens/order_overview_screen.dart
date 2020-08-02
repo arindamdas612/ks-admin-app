@@ -46,17 +46,20 @@ class _OrdersOverViewScreenState extends State<OrdersOverViewScreen> {
     super.initState();
   }
 
-  Future<void> _refreshOrders(BuildContext context) {
-    return this._memoizer.runOnce(() async {
-      await Provider.of<Orders>(context, listen: false).setAndFetchOrders();
-    });
-  }
+  Future<void> _refreshOrders(BuildContext context, bool userRequest) async =>
+      userRequest
+          ? await Provider.of<Orders>(context, listen: false)
+              .setAndFetchOrders()
+          : this._memoizer.runOnce(() async =>
+              await Provider.of<Orders>(context, listen: false)
+                  .setAndFetchOrders());
 
   @override
   Widget build(BuildContext context) {
     assert(_orderNavs.length == _orderPages.length);
     final bottomNavBar = BottomNavigationBar(
       items: _orderNavs,
+      selectedItemColor: Theme.of(context).accentColor,
       currentIndex: _currentIndex,
       type: BottomNavigationBarType.shifting,
       onTap: (int index) => setState(() {
@@ -66,12 +69,18 @@ class _OrdersOverViewScreenState extends State<OrdersOverViewScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Orders'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () => _refreshOrders(context, true),
+          )
+        ],
       ),
       drawer: AppDrawer(),
       body: PageStorage(
         bucket: _bucket,
         child: FutureBuilder(
-          future: _refreshOrders(context),
+          future: _refreshOrders(context, false),
           builder: (_, snapShot) {
             return snapShot.connectionState == ConnectionState.waiting
                 ? Padding(
