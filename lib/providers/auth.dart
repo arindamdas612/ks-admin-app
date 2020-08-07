@@ -54,6 +54,7 @@ class Auth with ChangeNotifier {
         "Accept": "application/json"
       };
       var url = 'http://10.0.2.2:8000/api/1/login/';
+      print(url);
       var response = await http.post(
         url,
         headers: userHeader,
@@ -73,6 +74,7 @@ class Auth with ChangeNotifier {
       userHeader['Authorization'] = 'token $_token';
       response = await http.get(url, headers: userHeader);
       var allUsers = json.decode(response.body);
+      print(allUsers);
       final loggedInUser =
           allUsers.firstWhere((user) => user['email'] == email);
 

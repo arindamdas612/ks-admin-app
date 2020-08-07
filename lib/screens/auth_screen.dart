@@ -138,7 +138,9 @@ class _AuthCardState extends State<AuthCard> {
             borderRadius: BorderRadius.circular(30),
           ),
           child: FlatButton(
-            onPressed: () => _submit(),
+            onPressed: () {
+              return _submit();
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

@@ -3,10 +3,10 @@ import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:ks_admin/providers/orders.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 
 import '../widgets/app_drawer.dart';
 import '../widgets/orders_recent.dart';
-import '../widgets/orders_by_user.dart';
 
 class OrdersOverViewScreen extends StatefulWidget {
   static const routeName = '/order';
@@ -16,35 +16,7 @@ class OrdersOverViewScreen extends StatefulWidget {
 }
 
 class _OrdersOverViewScreenState extends State<OrdersOverViewScreen> {
-  int _currentIndex = 0;
-  final _orderNavs = const <BottomNavigationBarItem>[
-    BottomNavigationBarItem(
-      icon: const Icon(
-        Icons.redeem,
-      ),
-      title: const Text('Recent'),
-    ),
-    BottomNavigationBarItem(
-      icon: const Icon(
-        Icons.people,
-      ),
-      title: const Text('by User'),
-    )
-  ];
-
-  OrdersRecent _recentOrdersPage;
-  OrdersByUser _byUserOrderPages;
-  List<Widget> _orderPages;
-  final PageStorageBucket _bucket = PageStorageBucket();
   final AsyncMemoizer _memoizer = AsyncMemoizer();
-
-  @override
-  void initState() {
-    _recentOrdersPage = OrdersRecent();
-    _byUserOrderPages = OrdersByUser();
-    _orderPages = [_recentOrdersPage, _byUserOrderPages];
-    super.initState();
-  }
 
   Future<void> _refreshOrders(BuildContext context, bool userRequest) async =>
       userRequest
@@ -56,44 +28,39 @@ class _OrdersOverViewScreenState extends State<OrdersOverViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    assert(_orderNavs.length == _orderPages.length);
-    final bottomNavBar = BottomNavigationBar(
-      items: _orderNavs,
-      selectedItemColor: Theme.of(context).accentColor,
-      currentIndex: _currentIndex,
-      type: BottomNavigationBarType.shifting,
-      onTap: (int index) => setState(() {
-        _currentIndex = index;
-      }),
-    );
     return Scaffold(
       appBar: AppBar(
-        title: Text('Orders'),
+        title: Text('Orders Recieved'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: () => _refreshOrders(context, true),
+            icon: Icon(Icons.cached),
+            onPressed: () async {
+              try {
+                await _refreshOrders(context, true);
+                Toast.show("Orders refreshed!!!", context,
+                    duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+              } catch (error) {
+                Toast.show("Order refresh failed!!!", context,
+                    duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+              }
+            },
           )
         ],
       ),
       drawer: AppDrawer(),
-      body: PageStorage(
-        bucket: _bucket,
-        child: FutureBuilder(
-          future: _refreshOrders(context, false),
-          builder: (_, snapShot) {
-            return snapShot.connectionState == ConnectionState.waiting
-                ? Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Center(
-                      child: LinearProgressIndicator(),
-                    ),
-                  )
-                : _orderPages[_currentIndex];
-          },
-        ),
+      body: FutureBuilder(
+        future: _refreshOrders(context, false),
+        builder: (_, snapShot) {
+          return snapShot.connectionState == ConnectionState.waiting
+              ? Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              : OrdersRecent();
+        },
       ),
-      bottomNavigationBar: bottomNavBar,
     );
   }
 }

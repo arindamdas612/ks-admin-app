@@ -7,11 +7,13 @@ import '../screens/home_screen.dart';
 import '../screens/category_overview_screen.dart';
 import '../screens/product_overview_screen.dart';
 import '../screens/order_overview_screen.dart';
+import '../screens/user_overview_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final name = Provider.of<Auth>(context).name;
+    var curRoute = ModalRoute.of(context).settings.name;
     return Drawer(
         child: Column(
       children: <Widget>[
@@ -23,6 +25,7 @@ class AppDrawer extends StatelessWidget {
         ),
         const Divider(),
         ListTile(
+          selected: curRoute == HomeScreen.routeName,
           leading: const Icon(Icons.home),
           title: const Text('Home'),
           onTap: () =>
@@ -30,6 +33,15 @@ class AppDrawer extends StatelessWidget {
         ),
         const Divider(),
         ListTile(
+          selected: curRoute == UserOverViewScreen.routeName,
+          leading: const Icon(Icons.people),
+          title: const Text('Users'),
+          onTap: () => Navigator.of(context)
+              .pushReplacementNamed(UserOverViewScreen.routeName),
+        ),
+        const Divider(),
+        ListTile(
+          selected: curRoute == OrdersOverViewScreen.routeName,
           leading: const Icon(Icons.flash_auto),
           title: const Text('Orders'),
           onTap: () => Navigator.of(context)
@@ -37,6 +49,7 @@ class AppDrawer extends StatelessWidget {
         ),
         const Divider(),
         ListTile(
+          selected: curRoute == CategoryOverviewScreen.routeName,
           leading: const Icon(Icons.category),
           title: const Text('Categories'),
           onTap: () => Navigator.of(context)
@@ -44,6 +57,7 @@ class AppDrawer extends StatelessWidget {
         ),
         const Divider(),
         ListTile(
+          selected: curRoute == ProductOverViewScreen.routeName,
           leading: const Icon(Icons.fastfood),
           title: const Text('Products'),
           onTap: () => Navigator.of(context)

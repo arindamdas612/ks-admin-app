@@ -21,10 +21,14 @@ import './screens/order_overview_screen.dart';
 import './screens/order_detail_screen.dart';
 import './screens/order_timeline_screen.dart';
 
+import './screens/user_overview_screen.dart';
+import './screens/user_order_cart_screen.dart';
+
 import './providers/auth.dart';
 import './providers/categories.dart';
 import './providers/products.dart';
 import './providers/orders.dart';
+import './providers/users.dart';
 
 void main() {
   runApp(MyApp());
@@ -58,6 +62,14 @@ class MyApp extends StatelessWidget {
             previousOrders == null ? [] : previousOrders.items,
           ),
         ),
+        ChangeNotifierProxyProvider<Auth, Users>(
+          create: null,
+          update: (ctx, auth, previousUsers) => Users(
+            auth.token,
+            auth.userId,
+            previousUsers == null ? [] : previousUsers.users,
+          ),
+        ),
       ],
       child: Consumer<Auth>(
         builder: (ctx, authData, _) => MaterialApp(
@@ -86,7 +98,9 @@ class MyApp extends StatelessWidget {
             ProductCarousel.routName: (_) => ProductCarousel(),
             OrdersOverViewScreen.routeName: (_) => OrdersOverViewScreen(),
             OrderDetailScreen.routeName: (_) => OrderDetailScreen(),
-            OrderTimeLineScreen.routeName: (_) => OrderTimeLineScreen()
+            OrderTimeLineScreen.routeName: (_) => OrderTimeLineScreen(),
+            UserOverViewScreen.routeName: (_) => UserOverViewScreen(),
+            UserOrderCartScreen.routeName: (_) => UserOrderCartScreen(),
           },
           debugShowCheckedModeBanner: false,
         ),

@@ -28,12 +28,13 @@ dependencies:
   http: ^0.12.1
   shared_preferences: ^0.5.8
   path_provider: ^1.6.11
-  path: 1.6.4
+  path: 1.7.0
   multi_image_picker: ^4.6.9
   http_parser: ^3.1.4
   carousel_slider: ^2.2.1
   toast: ^0.1.5
-  timeline_list: ^0.0.3
+  curved_navigation_bar: ^0.3.3
+  charts_flutter: ^0.9.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -80,6 +81,9 @@ flutter:
         - asset: assets/fonts/PTSansNarrow-Regular.ttf
         - asset: assets/fonts/PTSansNarrow-Bold.ttf
           weight: 700
+    - family: Orbitron
+      fonts:
+        - asset: assets/fonts/Orbitron-Black.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

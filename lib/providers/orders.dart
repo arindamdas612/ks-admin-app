@@ -148,8 +148,13 @@ class Orders with ChangeNotifier {
     }
   }
 
-  Future<void> changeItemStatus(int orderItemId, bool noStock) async {
+  Future<void> changeItemStatus(
+      int orderItemId, bool noStock, String status) async {
     var nextStatus = noStock ? 'Ordered' : 'No Stock';
+    if ((status != 'Ordered') && (status != 'No Stock'))
+      throw HttpException(
+          'Cannot to complete the action. Items must be in Ordered/No Stock State.');
+
     Map<String, String> requestHeader = {
       "Content-type": "application/json",
       "Accept": "application/json",
